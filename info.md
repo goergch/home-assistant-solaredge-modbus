@@ -1,4 +1,4 @@
-## SOLAREDGE MODBUS TCP
+## SOLAREDGE MODBUS TCP WITH METER1
 
 Home assistant Custom Component for reading data from Solaredge inverter through modbus TCP. Implements Inverter registers from https://www.solaredge.com/sites/default/files/sunspec-implementation-technical-note.pdf.
 
