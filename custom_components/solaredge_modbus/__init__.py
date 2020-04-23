@@ -337,12 +337,11 @@ class SolaredgeModbusHub:
             rvInverter = True
         if not meter1_data.isError():
             decoder = BinaryPayloadDecoder.fromRegisters(meter1_data.registers, byteorder=Endian.Big)
-            m1accurrent = decoder.decode_16bit_uint()
-            m1accurrenta = decoder.decode_16bit_uint()
-            m1accurrentb = decoder.decode_16bit_uint()
-            m1accurrentc = decoder.decode_16bit_uint()
-            m1accurrentsf = decoder.decode_16bit_uint()
-
+            m1accurrent =   decoder.decode_16bit_int()
+            m1accurrenta =  decoder.decode_16bit_int()
+            m1accurrentb =  decoder.decode_16bit_int()
+            m1accurrentc =  decoder.decode_16bit_int()
+            m1accurrentsf = decoder.decode_16bit_int()
             m1accurrent = self.calculate_value(m1accurrent, m1accurrentsf)
             m1accurrenta = self.calculate_value(m1accurrenta, m1accurrentsf)
             m1accurrentb = self.calculate_value(m1accurrentb, m1accurrentsf)
@@ -355,14 +354,14 @@ class SolaredgeModbusHub:
 
             
 
-            m1acvoltageln = decoder.decode_16bit_uint()
-            m1acvoltagean = decoder.decode_16bit_uint()
-            m1acvoltagebn = decoder.decode_16bit_uint()
-            m1acvoltagecn = decoder.decode_16bit_uint()
-            m1acvoltagell = decoder.decode_16bit_uint()
-            m1acvoltageab = decoder.decode_16bit_uint()
-            m1acvoltagebc = decoder.decode_16bit_uint()
-            m1acvoltageca = decoder.decode_16bit_uint()
+            m1acvoltageln = decoder.decode_16bit_int()
+            m1acvoltagean = decoder.decode_16bit_int()
+            m1acvoltagebn = decoder.decode_16bit_int()
+            m1acvoltagecn = decoder.decode_16bit_int()
+            m1acvoltagell = decoder.decode_16bit_int()
+            m1acvoltageab = decoder.decode_16bit_int()
+            m1acvoltagebc = decoder.decode_16bit_int()
+            m1acvoltageca = decoder.decode_16bit_int()
             m1acvoltagesf = decoder.decode_16bit_int()
                 
             
@@ -386,7 +385,7 @@ class SolaredgeModbusHub:
             self.data["m1acvoltageca"] = round(m1acvoltageca, abs(m1acvoltagesf))
 
             
-            m1acfreq = decoder.decode_16bit_uint()
+            m1acfreq = decoder.decode_16bit_int()
             m1acfreqsf = decoder.decode_16bit_int()
             m1acfreq = self.calculate_value(m1acfreq, m1acfreqsf)
 
@@ -459,14 +458,14 @@ class SolaredgeModbusHub:
             self.data["m1acpfc"] = round(m1acpfc, abs(m1acpfsf))
 
             
-            m1acexported   = decoder.decode_16bit_int()
-            m1acexporteda  = decoder.decode_16bit_int()
-            m1acexportedb  = decoder.decode_16bit_int()
-            m1acexportedc  = decoder.decode_16bit_int()
-            m1acimported   = decoder.decode_16bit_int()
-            m1acimporteda  = decoder.decode_16bit_int()
-            m1acimportedb  = decoder.decode_16bit_int()
-            m1acimportedc  = decoder.decode_16bit_int()
+            m1acexported   = decoder.decode_32bit_uint()
+            m1acexporteda  = decoder.decode_32bit_uint()
+            m1acexportedb  = decoder.decode_32bit_uint()
+            m1acexportedc  = decoder.decode_32bit_uint()
+            m1acimported   = decoder.decode_32bit_uint()
+            m1acimporteda  = decoder.decode_32bit_uint()
+            m1acimportedb  = decoder.decode_32bit_uint()
+            m1acimportedc  = decoder.decode_32bit_uint()
             m1acenergysf = decoder.decode_16bit_int()
             
             m1acexported  = self.calculate_value(m1acexported,  m1acenergysf)
