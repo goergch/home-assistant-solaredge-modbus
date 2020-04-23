@@ -176,10 +176,52 @@ class SolaredgeModbusHub:
         self.data["tempsink"] = 1
         self.data["status"] = 1
         self.data["statusvendor"] = 1
+
+        #meter1
+        self.data["m1acurrent"] = 1
+        self.data["m1acurrenta"] = 1
+        self.data["m1acurrentb"] = 1
+        self.data["m1acurrentc"] = 1
+        self.data["m1acvoltageln"] = 1
+        self.data["m1acvoltagean"] = 1
+        self.data["m1acvoltagebn"] = 1
+        self.data["m1acvoltagecn"] = 1
+        self.data["m1acvoltagell"] = 1
+        self.data["m1acvoltageab"] = 1
+        self.data["m1acvoltagebc"] = 1
+        self.data["m1acvoltageca"] = 1
+        self.data["m1acfreq"] = 1
+        self.data["m1acpower"] = 1
+        self.data["m1acpowera"] = 1
+        self.data["m1acpowerb"] = 1
+        self.data["m1acpowerc"] = 1
+        self.data["m1acva"] = 1
+        self.data["m1acvaa"] = 1
+        self.data["m1acvab"] = 1
+        self.data["m1acvac"] = 1
+        self.data["m1acvar"] = 1
+        self.data["m1acvara"] = 1
+        self.data["m1acvarb"] = 1
+        self.data["m1acvarc"] = 1
+        self.data["m1acpf"] = 1
+        self.data["m1acpfa"] = 1
+        self.data["m1acpfb"] = 1
+        self.data["m1acpfc"] = 1
+        self.data["m1exported"] = 1
+        self.data["m1exporteda"] = 1
+        self.data["m1exportedb"] = 1
+        self.data["m1exportedc"] = 1
+        self.data["m1imported"] = 1
+        self.data["m1importeda"] = 1
+        self.data["m1importedb"] = 1
+        self.data["m1importedc"] = 1
         return True
 
     def read_modbus_data(self):
+        rvInverter = False
+        rvMeter1 = False
         inverter_data = self.read_holding_registers(unit=1, address=40071, count=38)
+        meter1_data = self.read_holding_registers(unit=1, address=40189, count=53)
         if not inverter_data.isError():
             decoder = BinaryPayloadDecoder.fromRegisters(inverter_data.registers, byteorder=Endian.Big)
             accurrent = decoder.decode_16bit_uint()
@@ -292,6 +334,157 @@ class SolaredgeModbusHub:
             statusvendor = decoder.decode_16bit_int()
             self.data["statusvendor"] = statusvendor
 
-            return True
-        else:
-            return False
+            rvInverter = True
+        if not meter1_data.isError():
+            decoder = BinaryPayloadDecoder.fromRegisters(meter1_data.registers, byteorder=Endian.Big)
+            m1accurrent = decoder.decode_16bit_uint()
+            m1accurrenta = decoder.decode_16bit_uint()
+            m1accurrentb = decoder.decode_16bit_uint()
+            m1accurrentc = decoder.decode_16bit_uint()
+            m1accurrentsf = decoder.decode_16bit_uint()
+
+            m1accurrent = self.calculate_value(m1accurrent, m1accurrentsf)
+            m1accurrenta = self.calculate_value(m1accurrenta, m1accurrentsf)
+            m1accurrentb = self.calculate_value(m1accurrentb, m1accurrentsf)
+            m1accurrentc = self.calculate_value(m1accurrentc, m1accurrentsf)
+            
+            self.data["m1acurrent"] = round(m1accurrent, abs(m1accurrentsf))
+            self.data["m1acurrenta"] = round(m1accurrenta, abs(m1accurrentsf))
+            self.data["m1acurrentb"] = round(m1accurrentb, abs(m1accurrentsf))
+            self.data["m1acurrentc"] = round(m1accurrentc, abs(m1accurrentsf))
+
+            
+
+            m1acvoltageln = decoder.decode_16bit_uint()
+            m1acvoltagean = decoder.decode_16bit_uint()
+            m1acvoltagebn = decoder.decode_16bit_uint()
+            m1acvoltagecn = decoder.decode_16bit_uint()
+            m1acvoltagell = decoder.decode_16bit_uint()
+            m1acvoltageab = decoder.decode_16bit_uint()
+            m1acvoltagebc = decoder.decode_16bit_uint()
+            m1acvoltageca = decoder.decode_16bit_uint()
+            m1acvoltagesf = decoder.decode_16bit_int()
+                
+            
+            m1acvoltagell = self.calculate_value(m1acvoltageab, m1acvoltagesf)
+            m1acvoltageab = self.calculate_value(m1acvoltageab, m1acvoltagesf)
+            m1acvoltagebc = self.calculate_value(m1acvoltagebc, m1acvoltagesf)
+            m1acvoltageca = self.calculate_value(m1acvoltageca, m1acvoltagesf)
+            m1acvoltageln = self.calculate_value(m1acvoltageab, m1acvoltagesf)
+            m1acvoltagean = self.calculate_value(m1acvoltagean, m1acvoltagesf)
+            m1acvoltagebn = self.calculate_value(m1acvoltagebn, m1acvoltagesf)
+            m1acvoltagecn = self.calculate_value(m1acvoltagecn, m1acvoltagesf)
+
+
+            self.data["m1acvoltageln"] = round(m1acvoltageln, abs(m1acvoltagesf))
+            self.data["m1acvoltagean"] = round(m1acvoltagean, abs(m1acvoltagesf))
+            self.data["m1acvoltagebn"] = round(m1acvoltagebn, abs(m1acvoltagesf))
+            self.data["m1acvoltagecn"] = round(m1acvoltagecn, abs(m1acvoltagesf))
+            self.data["m1acvoltagell"] = round(m1acvoltagell, abs(m1acvoltagesf))
+            self.data["m1acvoltageab"] = round(m1acvoltageab, abs(m1acvoltagesf))
+            self.data["m1acvoltagebc"] = round(m1acvoltagebc, abs(m1acvoltagesf))
+            self.data["m1acvoltageca"] = round(m1acvoltageca, abs(m1acvoltagesf))
+
+            
+            m1acfreq = decoder.decode_16bit_uint()
+            m1acfreqsf = decoder.decode_16bit_int()
+            m1acfreq = self.calculate_value(m1acfreq, m1acfreqsf)
+
+            self.data["m1acfreq"] = round(m1acfreq, abs(m1acfreqsf))
+
+            
+            m1acpower = decoder.decode_16bit_int()
+            m1acpowera = decoder.decode_16bit_int()
+            m1acpowerb = decoder.decode_16bit_int()
+            m1acpowerc = decoder.decode_16bit_int()
+            m1acpowersf = decoder.decode_16bit_int()
+
+            m1acpower = self.calculate_value(m1acpower, m1acpowersf)
+            m1acpowera = self.calculate_value(m1acpowera, m1acpowersf)
+            m1acpowerb = self.calculate_value(m1acpowerb, m1acpowersf)
+            m1acpowerc = self.calculate_value(m1acpowerc, m1acpowersf)
+                
+            self.data["m1acpower"] = round(m1acpower, abs(m1acpowersf))
+            self.data["m1acpowera"] = round(m1acpowera, abs(m1acpowersf))
+            self.data["m1acpowerb"] = round(m1acpowerb, abs(m1acpowersf))
+            self.data["m1acpowerc"] = round(m1acpowerc, abs(m1acpowersf))
+
+            
+            m1acva   = decoder.decode_16bit_int()
+            m1acvaa  = decoder.decode_16bit_int()
+            m1acvab  = decoder.decode_16bit_int()
+            m1acvac  = decoder.decode_16bit_int()
+            m1acvasf = decoder.decode_16bit_int()
+            
+            m1acva  = self.calculate_value(m1acva,  m1acvasf)
+            m1acvaa = self.calculate_value(m1acvaa, m1acvasf)
+            m1acvab = self.calculate_value(m1acvab, m1acvasf)
+            m1acvac = self.calculate_value(m1acvac, m1acvasf)
+
+            self.data["m1acva"]  = round(m1acva,  abs(m1acvasf))
+            self.data["m1acvaa"] = round(m1acvaa, abs(m1acvasf))
+            self.data["m1acvab"] = round(m1acvab, abs(m1acvasf))
+            self.data["m1acvac"] = round(m1acvac, abs(m1acvasf))
+            
+            m1acvar   = decoder.decode_16bit_int()
+            m1acvara  = decoder.decode_16bit_int()
+            m1acvarb  = decoder.decode_16bit_int()
+            m1acvarc  = decoder.decode_16bit_int()
+            m1acvarsf = decoder.decode_16bit_int()
+            
+            m1acvar  = self.calculate_value(m1acvar,  m1acvarsf)
+            m1acvara = self.calculate_value(m1acvara, m1acvarsf)
+            m1acvarb = self.calculate_value(m1acvarb, m1acvarsf)
+            m1acvarc = self.calculate_value(m1acvarc, m1acvarsf)
+
+            self.data["m1acvar"]  = round(m1acvar,  abs(m1acvarsf))
+            self.data["m1acvara"] = round(m1acvara, abs(m1acvarsf))
+            self.data["m1acvarb"] = round(m1acvarb, abs(m1acvarsf))
+            self.data["m1acvarc"] = round(m1acvarc, abs(m1acvarsf))
+            
+            m1acpf   = decoder.decode_16bit_int()
+            m1acpfa  = decoder.decode_16bit_int()
+            m1acpfb  = decoder.decode_16bit_int()
+            m1acpfc  = decoder.decode_16bit_int()
+            m1acpfsf = decoder.decode_16bit_int()
+            
+            m1acpf  = self.calculate_value(m1acpf,  m1acpfsf)
+            m1acpfa = self.calculate_value(m1acpfa, m1acpfsf)
+            m1acpfb = self.calculate_value(m1acpfb, m1acpfsf)
+            m1acpfc = self.calculate_value(m1acpfc, m1acpfsf)
+
+            self.data["m1acpf"]  = round(m1acpf,  abs(m1acpfsf))
+            self.data["m1acpfa"] = round(m1acpfa, abs(m1acpfsf))
+            self.data["m1acpfb"] = round(m1acpfb, abs(m1acpfsf))
+            self.data["m1acpfc"] = round(m1acpfc, abs(m1acpfsf))
+
+            
+            m1acexported   = decoder.decode_16bit_int()
+            m1acexporteda  = decoder.decode_16bit_int()
+            m1acexportedb  = decoder.decode_16bit_int()
+            m1acexportedc  = decoder.decode_16bit_int()
+            m1acimported   = decoder.decode_16bit_int()
+            m1acimporteda  = decoder.decode_16bit_int()
+            m1acimportedb  = decoder.decode_16bit_int()
+            m1acimportedc  = decoder.decode_16bit_int()
+            m1acenergysf = decoder.decode_16bit_int()
+            
+            m1acexported  = self.calculate_value(m1acexported,  m1acenergysf)
+            m1acexporteda = self.calculate_value(m1acexporteda, m1acenergysf)
+            m1acexportedb = self.calculate_value(m1acexportedb, m1acenergysf)
+            m1acexportedc = self.calculate_value(m1acexportedc, m1acenergysf)
+            m1acimported  = self.calculate_value(m1acimported,  m1acenergysf)
+            m1acimporteda = self.calculate_value(m1acimporteda, m1acenergysf)
+            m1acimportedb = self.calculate_value(m1acimportedb, m1acenergysf)
+            m1acimportedc = self.calculate_value(m1acimportedc, m1acenergysf)
+
+            self.data["m1acexported"]  = round(m1acexported,  abs(m1acenergysf))
+            self.data["m1acexporteda"] = round(m1acexporteda, abs(m1acenergysf))
+            self.data["m1acexportedb"] = round(m1acexportedb, abs(m1acenergysf))
+            self.data["m1acexportedc"] = round(m1acexportedc, abs(m1acenergysf))
+            self.data["m1acimported"]  = round(m1acimported,  abs(m1acenergysf))
+            self.data["m1acimporteda"] = round(m1acimporteda, abs(m1acenergysf))
+            self.data["m1acimportedb"] = round(m1acimportedb, abs(m1acenergysf))
+            self.data["m1acimportedc"] = round(m1acimportedc, abs(m1acenergysf))
+            rvMeter1 = True
+        return rvInverter and rvMeter1
