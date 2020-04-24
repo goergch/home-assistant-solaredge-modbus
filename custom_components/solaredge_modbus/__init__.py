@@ -221,7 +221,7 @@ class SolaredgeModbusHub:
         rvInverter = False
         rvMeter1 = False
         inverter_data = self.read_holding_registers(unit=1, address=40071, count=38)
-        meter1_data = self.read_holding_registers(unit=1, address=40189, count=53)
+        meter1_data = self.read_holding_registers(unit=1, address=40190, count=53)
         if not inverter_data.isError():
             decoder = BinaryPayloadDecoder.fromRegisters(inverter_data.registers, byteorder=Endian.Big)
             accurrent = decoder.decode_16bit_uint()
