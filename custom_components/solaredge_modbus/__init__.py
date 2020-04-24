@@ -347,10 +347,10 @@ class SolaredgeModbusHub:
             m1accurrentb = self.calculate_value(m1accurrentb, m1accurrentsf)
             m1accurrentc = self.calculate_value(m1accurrentc, m1accurrentsf)
             
-            self.data["m1acurrent"] = round(m1accurrent, abs(m1accurrentsf))
-            self.data["m1acurrenta"] = round(m1accurrenta, abs(m1accurrentsf))
-            self.data["m1acurrentb"] = round(m1accurrentb, abs(m1accurrentsf))
-            self.data["m1acurrentc"] = round(m1accurrentc, abs(m1accurrentsf))
+            self.data["m1accurrent"] = round(m1accurrent, abs(m1accurrentsf))
+            self.data["m1accurrenta"] = round(m1accurrenta, abs(m1accurrentsf))
+            self.data["m1accurrentb"] = round(m1accurrentb, abs(m1accurrentsf))
+            self.data["m1accurrentc"] = round(m1accurrentc, abs(m1accurrentsf))
 
             
 
