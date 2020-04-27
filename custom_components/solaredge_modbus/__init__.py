@@ -483,6 +483,7 @@ class SolaredgeModbusHub:
             self.data["m1acexportedc"] = round(m1acexportedc * 0.001, 3)
             self.data["m1acimporteda"] = round(m1acimporteda * 0.001, 3)
             self.data["m1acimportedb"] = round(m1acimportedc * 0.001, 3)
+            self.data["m1acimportedc"] = round(m1acimportedc * 0.001, 3)
             self.data["m1acimported"] = round(m1acimportedc * 0.001, 3)
             rvMeter1 = True
         return rvInverter and rvMeter1
