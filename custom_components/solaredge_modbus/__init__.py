@@ -477,13 +477,12 @@ class SolaredgeModbusHub:
             m1acimportedb = self.calculate_value(m1acimportedb, m1acenergysf)
             m1acimportedc = self.calculate_value(m1acimportedc, m1acenergysf)
 
-            self.data["m1acexported"]  = round(m1acexported,  abs(m1acenergysf))
-            self.data["m1acexporteda"] = round(m1acexporteda, abs(m1acenergysf))
-            self.data["m1acexportedb"] = round(m1acexportedb, abs(m1acenergysf))
-            self.data["m1acexportedc"] = round(m1acexportedc, abs(m1acenergysf))
-            self.data["m1acimported"]  = round(m1acimported,  abs(m1acenergysf))
-            self.data["m1acimporteda"] = round(m1acimporteda, abs(m1acenergysf))
-            self.data["m1acimportedb"] = round(m1acimportedb, abs(m1acenergysf))
-            self.data["m1acimportedc"] = round(m1acimportedc, abs(m1acenergysf))
+            self.data["m1acexported"] = round(m1acexported * 0.001, 3)
+            self.data["m1acexporteda"] = round(m1acexporteda * 0.001, 3)
+            self.data["m1acexportedb"] = round(m1acexportedb * 0.001, 3)
+            self.data["m1acexportedc"] = round(m1acexportedc * 0.001, 3)
+            self.data["m1acimporteda"] = round(m1acimporteda * 0.001, 3)
+            self.data["m1acimportedb"] = round(m1acimportedc * 0.001, 3)
+            self.data["m1acimported"] = round(m1acimportedc * 0.001, 3)
             rvMeter1 = True
         return rvInverter and rvMeter1
