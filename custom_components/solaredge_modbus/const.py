@@ -64,14 +64,14 @@ SENSOR_TYPES = {
     "M1_AC_PFA": ["Meter 1 AC Power Factor A", "m1acpfa", "%", "mdi:flash"],
     "M1_AC_PFB": ["Meter 1 AC Power Factor B", "m1acpfb", "%", "mdi:flash"],
     "M1_AC_PFC": ["Meter 1 AC Power Factor C", "m1acpfc", "%", "mdi:flash"],
-    "M1_AC_EXPORTED":  ["Meter 1 Exported Real Energy",   "m1acexported",  "W", "mdi:arrow-expand-all"],
-    "M1_AC_EXPORTEDA": ["Meter 1 Exported Real Energy A", "m1acexporteda", "W", "mdi:arrow-expand-all"],
-    "M1_AC_EXPORTEDB": ["Meter 1 Exported Real Energy B", "m1acexportedb", "W", "mdi:arrow-expand-all"],
-    "M1_AC_EXPORTEDC": ["Meter 1 Exported Real Energy C", "m1acexportedc", "W", "mdi:arrow-expand-all"],
-    "M1_AC_IMPORTED":  ["Meter 1 Imported Real Energy",   "m1acimported",  "W", "mdi:arrow-collapse-all"],
-    "M1_AC_IMPORTEDA": ["Meter 1 Imported Real Energy A", "m1acimporteda", "W", "mdi:arrow-collapse-all"],
-    "M1_AC_IMPORTEDB": ["Meter 1 Imported Real Energy B", "m1acimportedb", "W", "mdi:arrow-collapse-all"],
-    "M1_AC_IMPORTEDC": ["Meter 1 Imported Real Energy C", "m1acimportedc", "W", "mdi:arrow-collapse-all"]
+    "M1_AC_EXPORTED":  ["Meter 1 Exported Real Energy",   "m1acexported",  "kWh", "mdi:arrow-expand-all"],
+    "M1_AC_EXPORTEDA": ["Meter 1 Exported Real Energy A", "m1acexporteda", "kWh", "mdi:arrow-expand-all"],
+    "M1_AC_EXPORTEDB": ["Meter 1 Exported Real Energy B", "m1acexportedb", "kWh", "mdi:arrow-expand-all"],
+    "M1_AC_EXPORTEDC": ["Meter 1 Exported Real Energy C", "m1acexportedc", "kWh", "mdi:arrow-expand-all"],
+    "M1_AC_IMPORTED":  ["Meter 1 Imported Real Energy",   "m1acimported",  "kWh", "mdi:arrow-collapse-all"],
+    "M1_AC_IMPORTEDA": ["Meter 1 Imported Real Energy A", "m1acimporteda", "kWh", "mdi:arrow-collapse-all"],
+    "M1_AC_IMPORTEDB": ["Meter 1 Imported Real Energy B", "m1acimportedb", "kWh", "mdi:arrow-collapse-all"],
+    "M1_AC_IMPORTEDC": ["Meter 1 Imported Real Energy C", "m1acimportedc", "kWh", "mdi:arrow-collapse-all"]
 }
 
 DEVICE_STATUSSES = {
